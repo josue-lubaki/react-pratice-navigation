@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer, useContext } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
 import Button from '../UI/Button/Button';
+import AuthContext from '../../store/auth-context';
 
 const USER_INPUT = 'USER_INPUT';
 const INPUT_BLUR = 'INPUT_BLUR';
@@ -27,7 +28,8 @@ const passwordReducer = (state, action) => {
 	return { value: '', isValid: false };
 };
 
-const Login = (props) => {
+const Login = () => {
+	const authContext = useContext(AuthContext);
 	const [formIsValid, setFormIsValid] = useState(false);
 
 	// my useReducers
@@ -75,7 +77,7 @@ const Login = (props) => {
 
 	const submitHandler = (event) => {
 		event.preventDefault();
-		props.onLogin(emailState.value, passwordState.value);
+		authContext.onLogin(emailState.value, passwordState.value);
 	};
 
 	return (
